@@ -5,7 +5,7 @@ struct Question questions[QUESTION_COUNT] = {
     {
         "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
         "An echo",
-        {"An echo", "A thought", "A shadow", "A dream"},
+        {"A thought", "A shadow", "An echo", "A dream"},
         4
     },
     {
