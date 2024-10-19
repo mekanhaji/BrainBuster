@@ -1,0 +1,10 @@
+# Build files
+/build/*
+*.exe
+*.o
+
+# IDE files
+/.vscode/*
+
+# Misc
+.DS_Store
