@@ -11,7 +11,7 @@ struct Question questions[QUESTION_COUNT] = {
     {
         "What has keys, but no locks; space, but no room; you can enter, but not go in. What is it?",
         "A keyboard",
-        {"A keyboard", "A map", "A book", "A phone"},
+        { "A map", "A book","A keyboard", "A phone"},
         4
     },
     {
@@ -23,7 +23,7 @@ struct Question questions[QUESTION_COUNT] = {
     {
         "What comes once in a minute, twice in a moment, but never in a thousand years?",
         "The letter M",
-        {"The letter M", "A second", "A heartbeat", "A blink"},
+        { "A second","The letter M", "A heartbeat", "A blink"},
         4
     },
     {
@@ -35,31 +35,31 @@ struct Question questions[QUESTION_COUNT] = {
     {
         "What is always in front of you but can't be seen?",
         "Your future",
-        {"Your future", "Air", "Your nose", "Your thoughts"},
+        { "Air", "Your nose", "Your thoughts","Your future"},
         4
     },
     {
         "What can travel around the world while staying in a corner?",
         "A stamp",
-        {"A stamp", "The internet", "A story", "An idea"},
+        { "The internet","A stamp", "A story", "An idea"},
         4
     },
     {
         "What has a head and a tail that are only made of digits?",
         "A coin",
-        {"A coin", "A binary number", "A clock", "A ruler"},
+        { "A binary number","A coin", "A clock", "A ruler"},
         4
     },
     {
         "If you have me, you want to share me. If you share me, you haven't got me. What am I?",
         "A secret",
-        {"A secret", "Love", "Money", "A story"},
+        { "Love", "Money", "A story","A secret"},
         4
     },
     {
         "What gets wet while drying?",
         "A towel",
-        {"A towel", "Hair", "Clothes", "Dishes"},
+        { "Hair", "Clothes", "Dishes", "A towel"},
         4
     },
     {
@@ -77,19 +77,19 @@ struct Question questions[QUESTION_COUNT] = {
     {
         "What begins with T, ends with T, and has T in it?",
         "A teapot",
-        {"A teapot", "Thought", "Testament", "Terrorist"},
+        { "Thought", "Testament","A teapot", "Terrorist"},
         4
     },
     {
         "What is so fragile that saying its name breaks it?",
         "Silence",
-        {"Silence", "Glass", "A promise", "An idea"},
+        { "Glass", "A promise", "An idea","Silence"},
         4
     },
     {
         "I have branches, but no fruit, trunk or leaves. What am I?",
         "A bank",
-        {"A bank", "A family tree", "A river", "A company"},
+        { "A family tree","Silence", "A river", "A company"},
         4
     },
     {
