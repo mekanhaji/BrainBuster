@@ -1,10 +1,10 @@
-main: main.c ./lib/questions.c ./lib/questions.h
+main: main.c ./lib/questions.c ./lib/questions.h ./lib/utility.c ./lib/utility.h
 	mkdir -p build
-	gcc -o build/main main.c ./lib/questions.c
+	gcc -o build/BranBuster main.c ./lib/questions.c ./lib/utility.c
 
-build: main.c ./lib/questions.c ./lib/questions.h
+prod: main.c ./lib/questions.c ./lib/questions.h ./lib/utility.c ./lib/utility.h
 	mkdir -p build
-	gcc -Wall -Wextra -Werror -o build/main main.c ./lib/questions.c
+	gcc -Wall -Wextra -Werror -o build/BranBuster main.c ./lib/questions.c ./lib/utility.c
 
 run: main
 	./build/main

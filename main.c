@@ -3,11 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "lib/questions.h"
-
-void clear_input_buffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}
-}
+#include "lib/utility.h"
 
 void ask_question(const struct Question* q) {
     printf("%s\n", q->question);
@@ -40,7 +36,7 @@ void ask_question(const struct Question* q) {
 
 int main() {
     srand(time(NULL));
-    int score = 0;
+    // int score = 0;
     int num_questions = 5;  // Number of questions to ask
 
     printf("Welcome to the Quiz Game!\n");
