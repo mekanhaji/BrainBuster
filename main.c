@@ -37,11 +37,22 @@ int ask_question(const struct Question* q) {
     return is_correct;
 }
 
+void show_title() {
+    printf("\t /$$$$$$$                     /$$                 /$$$$$$$                        /$$                        \n");
+    printf("\t| $$__  $$                   |__/                | $$__  $$                      | $$                        \n");
+    printf("\t| $$  \\ $$  /$$$$$$  /$$$$$$  /$$ /$$$$$$$       | $$  \\ $$ /$$   /$$  /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$ \n");
+    printf("\t| $$$$$$$  /$$__  $$|____  $$| $$| $$__  $$      | $$$$$$$ | $$  | $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$\n");
+    printf("\t| $$__  $$| $$  \\__/ /$$$$$$$| $$| $$  \\ $$      | $$__  $$| $$  | $$|  $$$$$$   | $$    | $$$$$$$$| $$  \\__/\n");
+    printf("\t| $$  \\ $$| $$      /$$__  $$| $$| $$  | $$      | $$  \\ $$| $$  | $$ \\____  $$  | $$ /$$| $$_____/| $$      \n");
+    printf("\t| $$$$$$$/| $$     |  $$$$$$$| $$| $$  | $$      | $$$$$$$/|  $$$$$$/ /$$$$$$$/  |  $$$$/|  $$$$$$$| $$      \n");
+    printf("\t|_______/ |__/      \\_______/|__/|__/  |__/      |_______/  \\______/ |_______/    \\___/   \\_______/|__/      \n");
+}
+
 int main() {
     srand(time(NULL));
     int max_score = 0;
     int num_questions = 5;  // Number of questions to ask
-
+    show_title();
     printf("%s%sWelcome to the Quiz Game!%s\n", BOLD, GREEN, RESET);
     printf("You will be asked %d random questions.\n\n", num_questions);
     int asked[QUESTION_COUNT] = { 0 };  // To keep track of asked questions
