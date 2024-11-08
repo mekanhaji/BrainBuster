@@ -14,7 +14,7 @@ prod: main.c $(HEADERS)
 	mkdir -p $(BUILD_DIR)
 	gcc $(CFLAGS) -o $(BUILD_DIR)/$(APP_NAME) main.c $(SRC)
 
-run: main
+run:
 	./$(BUILD_DIR)/$(APP_NAME)
 
 clean:
