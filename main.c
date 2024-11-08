@@ -4,8 +4,9 @@
 #include <time.h>
 #include "lib/questions.h"
 #include "lib/utility.h"
+#include "windows.h"
 
-void ask_question(const struct Question* q) {
+int ask_question(const struct Question* q) {
     printf("%s\n", q->question);
     for (int i = 0; i < q->option_count; i++) {
         printf("%d. %s\n", i + 1, q->options[i]);
@@ -24,35 +25,59 @@ void ask_question(const struct Question* q) {
     } while (1);
 
     clear_input_buffer();
-
+    int is_correct = 0;
     if (strcmp(q->options[choice - 1], q->answer) == 0) {
         printf("Correct!\n");
+        is_correct = 1;
     }
     else {
         printf("Incorrect. The correct answer is: %s\n", q->answer);
     }
     printf("\n");
+    return is_correct;
+}
+
+void show_title() {
+    printf("\t /$$$$$$$                     /$$                 /$$$$$$$                        /$$                        \n");
+    printf("\t| $$__  $$                   |__/                | $$__  $$                      | $$                        \n");
+    printf("\t| $$  \\ $$  /$$$$$$  /$$$$$$  /$$ /$$$$$$$       | $$  \\ $$ /$$   /$$  /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$ \n");
+    printf("\t| $$$$$$$  /$$__  $$|____  $$| $$| $$__  $$      | $$$$$$$ | $$  | $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$\n");
+    printf("\t| $$__  $$| $$  \\__/ /$$$$$$$| $$| $$  \\ $$      | $$__  $$| $$  | $$|  $$$$$$   | $$    | $$$$$$$$| $$  \\__/\n");
+    printf("\t| $$  \\ $$| $$      /$$__  $$| $$| $$  | $$      | $$  \\ $$| $$  | $$ \\____  $$  | $$ /$$| $$_____/| $$      \n");
+    printf("\t| $$$$$$$/| $$     |  $$$$$$$| $$| $$  | $$      | $$$$$$$/|  $$$$$$/ /$$$$$$$/  |  $$$$/|  $$$$$$$| $$      \n");
+    printf("\t|_______/ |__/      \\_______/|__/|__/  |__/      |_______/  \\______/ |_______/    \\___/   \\_______/|__/      \n");
 }
 
 int main() {
     srand(time(NULL));
-    // int score = 0;
+    int max_score = 0;
     int num_questions = 5;  // Number of questions to ask
-
-    printf("Welcome to the Quiz Game!\n");
+    show_title();
+    printf("%s%sWelcome to the Quiz Game!%s\n", BOLD, GREEN, RESET);
     printf("You will be asked %d random questions.\n\n", num_questions);
-
     int asked[QUESTION_COUNT] = { 0 };  // To keep track of asked questions
+    do
+    {
+        int score = 0;
+        for (int i = 0; i < num_questions; i++) {
+            int index;
+            do {
+                index = rand() % QUESTION_COUNT;
+            } while (asked[index]);
 
-    for (int i = 0; i < num_questions; i++) {
-        int index;
-        do {
-            index = rand() % QUESTION_COUNT;
-        } while (asked[index]);
+            asked[index] = 1;
+            printf("Current Score: %d\n", score);
+            int answer = ask_question(&questions[index]);
+            score += answer;
+        }
 
-        asked[index] = 1;
-        ask_question(&questions[index]);
-    }
+        if (score > max_score) {
+            max_score = score;
+        }
+        printf("Quiz completed! Your score is: %d\n", score);
+        printf("Do you want to play again? (y/n): ");
+    } while (getchar() != '\n');
+
 
     printf("Quiz completed!\n");
 
