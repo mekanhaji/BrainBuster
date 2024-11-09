@@ -45,10 +45,14 @@ int main() {
         show_title();
 
         int menu_choice = menu(name);
-
-        // === Game Screen ===
+        // Play Game
         if (menu_choice == 1) {
+            // === Game Screen ===
             game_screen();
+        }
+        // Exit
+        else if (menu_choice == 2) {
+            break;
         }
 
     };
