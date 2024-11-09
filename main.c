@@ -31,14 +31,10 @@ int play(int num_questions, int asked[]) {
     return score;
 }
 
-int menu(int is_first) {
+int menu() {
     int choice;
 
-    if (is_first)
-        printf("1. Play\n");
-    else
-        printf("1. Play Again\n");
-
+    printf("1. Play\n");
     printf("2. Exit\n");
     printf("Enter your choice: ");
     scanf("%d", &choice);
