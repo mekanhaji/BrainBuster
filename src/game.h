@@ -13,4 +13,9 @@ void show_title();
 
 void welcome_message();
 
+int play(int num_questions, int asked[]);
+
+int menu(char name[100]);
+
+void get_name(char name[100]);
 #endif // GAME_H
