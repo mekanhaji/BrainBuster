@@ -8,5 +8,9 @@
 #define YELLOW  "\033[33m"
 
 void clear_input_buffer();
+/**
+ * @brief Clear the screen
+ */
+void clear_screen();
 
 #endif // UTILITY_H

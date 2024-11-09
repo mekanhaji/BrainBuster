@@ -8,3 +8,6 @@
 
 # Misc
 .DS_Store
+
+# Files
+players.csv

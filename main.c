@@ -1,85 +1,76 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include "lib/questions.h"
-#include "lib/utility.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "time.h"
 #include "windows.h"
 
-int ask_question(const struct Question* q) {
-    printf("%s\n", q->question);
-    for (int i = 0; i < q->option_count; i++) {
-        printf("%d. %s\n", i + 1, q->options[i]);
-    }
+#include "lib/questions.h"
+#include "lib/utility.h"
+#include "lib/db.h"
+#include "src/game.h"
 
-    int choice;
-    do {
-        printf("Enter your choice (1-%d): ", q->option_count);
-        if (scanf("%d", &choice) != 1 || choice < 1 || choice > q->option_count) {
-            clear_input_buffer();
-            printf("Invalid input. Please try again.\n");
-        }
-        else {
-            break;
-        }
-    } while (1);
+const int num_questions = 2;  // Number of questions to ask
+int asked[QUESTION_COUNT] = {};  // To keep track of asked questions
+int is_new_player = 0; // To check if the player is new or not
+char name[100] = "";
+struct Player player;
 
-    clear_input_buffer();
-    int is_correct = 0;
-    if (strcmp(q->options[choice - 1], q->answer) == 0) {
-        printf("Correct!\n");
-        is_correct = 1;
-    }
-    else {
-        printf("Incorrect. The correct answer is: %s\n", q->answer);
-    }
-    printf("\n");
-    return is_correct;
+void welcome_screen() {
+    show_title();
+
+    welcome_message();
+    get_name(name);
 }
 
-void show_title() {
-    printf("\t /$$$$$$$                     /$$                 /$$$$$$$                        /$$                        \n");
-    printf("\t| $$__  $$                   |__/                | $$__  $$                      | $$                        \n");
-    printf("\t| $$  \\ $$  /$$$$$$  /$$$$$$  /$$ /$$$$$$$       | $$  \\ $$ /$$   /$$  /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$ \n");
-    printf("\t| $$$$$$$  /$$__  $$|____  $$| $$| $$__  $$      | $$$$$$$ | $$  | $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$\n");
-    printf("\t| $$__  $$| $$  \\__/ /$$$$$$$| $$| $$  \\ $$      | $$__  $$| $$  | $$|  $$$$$$   | $$    | $$$$$$$$| $$  \\__/\n");
-    printf("\t| $$  \\ $$| $$      /$$__  $$| $$| $$  | $$      | $$  \\ $$| $$  | $$ \\____  $$  | $$ /$$| $$_____/| $$      \n");
-    printf("\t| $$$$$$$/| $$     |  $$$$$$$| $$| $$  | $$      | $$$$$$$/|  $$$$$$/ /$$$$$$$/  |  $$$$/|  $$$$$$$| $$      \n");
-    printf("\t|_______/ |__/      \\_______/|__/|__/  |__/      |_______/  \\______/ |_______/    \\___/   \\_______/|__/      \n");
+void game_screen() {
+    int score = play(num_questions, asked);
+    if (score > player.best_score) {
+        player.best_score = score;
+    }
+    printf("Quiz completed! Your score is: %d\n", score);
 }
 
 int main() {
+    clear_screen();
     srand(time(NULL));
-    int max_score = 0;
-    int num_questions = 5;  // Number of questions to ask
-    show_title();
-    printf("%s%sWelcome to the Quiz Game!%s\n", BOLD, GREEN, RESET);
-    printf("You will be asked %d random questions.\n\n", num_questions);
-    int asked[QUESTION_COUNT] = { 0 };  // To keep track of asked questions
-    do
-    {
-        int score = 0;
-        for (int i = 0; i < num_questions; i++) {
-            int index;
-            do {
-                index = rand() % QUESTION_COUNT;
-            } while (asked[index]);
 
-            asked[index] = 1;
-            printf("Current Score: %d\n", score);
-            int answer = ask_question(&questions[index]);
-            score += answer;
+    // === welcome Screen === 
+    welcome_screen();
+
+    player = load_player_record(name);
+    if (player.name[0] == '\0') {
+        strcpy(player.name, name);
+        player.best_score = 0;
+        is_new_player = 1;
+    }
+    else {
+        is_new_player = 0;
+    }
+
+    while (1) {
+        clear_screen();
+        show_title();
+
+        if (is_new_player) {
+            printf("Welcome %s! You are a new player.\n", name);
+        }
+        else {
+            printf("Welcome back %s! Your best score is: %d\n", name, player.best_score);
         }
 
-        if (score > max_score) {
-            max_score = score;
+        int menu_choice = menu(name);
+        // Play Game
+        if (menu_choice == 1) {
+            // === Game Screen ===
+            game_screen();
+            save_player_record(player);
         }
-        printf("Quiz completed! Your score is: %d\n", score);
-        printf("Do you want to play again? (y/n): ");
-    } while (getchar() != '\n');
+        // Exit
+        else if (menu_choice == 2) {
+            save_player_record(player);
+            break;
+        }
 
-
-    printf("Quiz completed!\n");
-
+    };
     return 0;
 }
