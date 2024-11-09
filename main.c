@@ -6,29 +6,26 @@
 
 #include "lib/questions.h"
 #include "lib/utility.h"
+#include "lib/db.h"
 #include "src/game.h"
 
 const int num_questions = 2;  // Number of questions to ask
-int max_score = 0;
-char name[100] = "";
 int asked[QUESTION_COUNT] = {};  // To keep track of asked questions
+int is_new_player = 0; // To check if the player is new or not
+char name[100] = "";
+struct Player player;
 
 void welcome_screen() {
     show_title();
 
-    if (strlen(name) == 0) {
-        welcome_message();
-        get_name(name);
-    }
-    else {
-        printf("Your highest score is: %d\n", max_score);
-    }
+    welcome_message();
+    get_name(name);
 }
 
 void game_screen() {
     int score = play(num_questions, asked);
-    if (score > max_score) {
-        max_score = score;
+    if (score > player.best_score) {
+        player.best_score = score;
     }
     printf("Quiz completed! Your score is: %d\n", score);
 }
@@ -40,18 +37,37 @@ int main() {
     // === welcome Screen === 
     welcome_screen();
 
+    player = load_player_record(name);
+    if (player.name[0] == '\0') {
+        strcpy(player.name, name);
+        player.best_score = 0;
+        is_new_player = 1;
+    }
+    else {
+        is_new_player = 0;
+    }
+
     while (1) {
         clear_screen();
         show_title();
+
+        if (is_new_player) {
+            printf("Welcome %s! You are a new player.\n", name);
+        }
+        else {
+            printf("Welcome back %s! Your best score is: %d\n", name, player.best_score);
+        }
 
         int menu_choice = menu(name);
         // Play Game
         if (menu_choice == 1) {
             // === Game Screen ===
             game_screen();
+            save_player_record(player);
         }
         // Exit
         else if (menu_choice == 2) {
+            save_player_record(player);
             break;
         }
 

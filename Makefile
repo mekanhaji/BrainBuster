@@ -3,8 +3,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 BUILD_DIR = build
 TARGET = $(BUILD_DIR)/$(APP_NAME)
-HEADERS = ./lib/questions.h ./lib/utility.h ./src/game.h
-SRC = ./src/game.c ./lib/questions.c ./lib/utility.c
+HEADERS = ./lib/questions.h ./lib/utility.h ./src/game.h ./lib/db.h
+SRC = ./src/game.c ./lib/questions.c ./lib/utility.c ./lib/db.c
 
 main: main.c $(HEADERS)
 	mkdir -p $(BUILD_DIR)
