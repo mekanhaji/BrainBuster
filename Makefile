@@ -9,6 +9,7 @@ SRC = ./src/game.c ./lib/questions.c ./lib/utility.c
 main: main.c $(HEADERS)
 	mkdir -p $(BUILD_DIR)
 	gcc -o $(BUILD_DIR)/$(APP_NAME) main.c $(SRC)
+	./$(BUILD_DIR)/$(APP_NAME)
 
 prod: main.c $(HEADERS)
 	mkdir -p $(BUILD_DIR)
