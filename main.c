@@ -37,6 +37,11 @@ int main() {
     clear_screen();
     srand(time(NULL));
 
+    // Customize Console
+    SetConsoleCP(15);
+    SetConsoleTitle("Brain Buster");
+
+
     // === welcome Screen === 
     welcome_screen();
 
