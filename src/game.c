@@ -52,9 +52,10 @@ void show_title() {
     printf("\n\n");
 }
 
-void welcome_message() {
+void welcome_message(int num_questions) {
     printf("%s%sWelcome to the Quiz Game!%s\n", BOLD, GREEN, RESET);
-    printf("You will be asked 5 random questions.\n\n");
+    printf("- You will be asked %d questions.\n\n", num_questions);
+    printf("\n");
 }
 
 int play(int num_questions, int asked[]) {
@@ -66,8 +67,9 @@ int play(int num_questions, int asked[]) {
         } while (asked[index]);
 
         asked[index] = 1;
+        // TODO: score should be red if zero, green if more then best score, yellow if less then best score
         printf("Current Score: %d\n", score);
-        printf("You have answered %d out of %d\n\n", i, num_questions);
+        printf("You have answered %d out of %d questions.\n\n", i, num_questions);
         int answer = ask_question(&questions[index]);
         score += answer;
         printf("Press any key to continue \n");
@@ -82,7 +84,6 @@ int play(int num_questions, int asked[]) {
 
 int menu(char name[100]) {
     int choice;
-    printf("Olla! %s Welcome to Brain Buster!\n", name);
 
     printf("1. Play\n");
     printf("2. Exit\n");

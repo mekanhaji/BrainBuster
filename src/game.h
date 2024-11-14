@@ -11,7 +11,7 @@ int ask_question(const struct Question* q);
 
 void show_title();
 
-void welcome_message();
+void welcome_message(int num_questions);
 
 int play(int num_questions, int asked[]);
 

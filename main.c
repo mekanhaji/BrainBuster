@@ -9,7 +9,7 @@
 #include "lib/db.h"
 #include "src/game.h"
 
-const int num_questions = 2;  // Number of questions to ask
+const int num_questions = 5;  // Number of questions to ask
 int asked[QUESTION_COUNT] = {};  // To keep track of asked questions
 int is_new_player = 0; // To check if the player is new or not
 char name[100] = "";
@@ -18,11 +18,14 @@ struct Player player;
 void welcome_screen() {
     show_title();
 
-    welcome_message();
+    welcome_message(num_questions);
     get_name(name);
 }
 
 void game_screen() {
+    clear_screen();
+    show_title();
+
     int score = play(num_questions, asked);
     if (score > player.best_score) {
         player.best_score = score;
@@ -52,10 +55,10 @@ int main() {
         show_title();
 
         if (is_new_player) {
-            printf("Welcome %s! You are a new player.\n", name);
+            printf("Welcome %s!\n", name);
         }
         else {
-            printf("Welcome back %s! Your best score is: %d\n", name, player.best_score);
+            printf("Welcome back %s!\nYour best score is: %d\n", name, player.best_score);
         }
 
         int menu_choice = menu(name);
