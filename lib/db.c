@@ -12,9 +12,14 @@ struct Player load_player_record(const char name[PLAYER_NAME_SIZE]) {
         perror("Error opening file for reading");
         return player;
     }
+    char temp_player_name[PLAYER_NAME_SIZE];
+    int temp_best_score;
 
-    while (fscanf(file, "%99[^,],%d\n", player.name, &player.best_score) == 2) {
-        if (strcmp(player.name, name) == 0) {
+    while (fscanf(file, "%99[^,],%d\n", temp_player_name, &temp_best_score) == 2) {
+        if (strcmp(temp_player_name, name) == 0) {
+            strncpy(player.name, temp_player_name, PLAYER_NAME_SIZE - 1);
+            player.name[PLAYER_NAME_SIZE - 1] = '\0';  // Ensure null termination
+            player.best_score = temp_best_score;
             break;
         }
     }
